@@ -121,8 +121,19 @@ public class TarotManager : SingletonBehaviour<TarotManager>
         }
         foreach (var item in ClearNum)
         {
-            Debug.Log(item);
+            //Debug.Log(item);
+            int value;
+            if (FightProgress.oneroundNumber.TryGetValue(item.Key, out value))
+            {
+                FightProgress.oneroundNumber[item.Key] += item.Value;
+               
+            }
+            else
+            FightProgress.oneroundNumber.Add(item.Key, item.Value);
+            
         }
+        FightProgress.move = true;
+        FightProgress.timer = 0;
         return needRefill;
     }
 
@@ -248,7 +259,7 @@ public class TarotManager : SingletonBehaviour<TarotManager>
 
             if (topGameTarot.Type == TarotType.None)
             {
-                TarotPrefab randomPrefab = TarotPrefab.GetRandomTarotPrefab(GameManager.Instance.tarotPrefabs);
+                TarotPrefab randomPrefab = TarotPrefab.GetRandomTarotPrefab(GameManager.Instance.allTarotPrefabs);
                 GameObject newTarot = Instantiate(GameManager.Instance.prefabDictionaryByType[randomPrefab.TarotType], GridPositionToWorldPosition(x, Constant.rows), Quaternion.identity, containerTransform);
 
                 gameTarots[x, Constant.rows - 1] = newTarot.GetComponent<GameTarot>();

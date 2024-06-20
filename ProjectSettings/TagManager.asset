@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tarot
   - TarotEmpty
+  - skill
   layers:
   - Default
   - TransparentFX

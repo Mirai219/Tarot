@@ -6,7 +6,10 @@ public class GameManager : SingletonBehaviour<GameManager>
     public int turn = 0;
 
     [SerializeField]
-    public TarotPrefab[] tarotPrefabs; 
+    public TarotPrefab[] allTarotPrefabs;
+    //public int[] selectedTarotIndex;
+    //public TarotPrefab[] selectedTarotPrefabs;   
+
     public Dictionary<TarotType, GameObject> prefabDictionaryByType;
 
     [SerializeField]
@@ -16,18 +19,26 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         base.Awake();        
         prefabDictionaryByType = new Dictionary<TarotType, GameObject>();
+        //selectedTarotIndex = new int[Constant.selectedTaritLimit];
+        //selectedTarotPrefabs = new TarotPrefab[Constant.selectedTaritLimit];
     }
 
     private void OnEnable()
     {
         //登记所有的预制体
-        foreach (var tarotPrefab in tarotPrefabs)
+        foreach (var tarotPrefab in allTarotPrefabs)
         {
             if (!prefabDictionaryByType.ContainsKey(tarotPrefab.TarotType))
             {
                 prefabDictionaryByType.Add(tarotPrefab.TarotType, tarotPrefab.Prefab);
             }
         }
+
+        //for (int i = 0; i < selectedTarotIndex.Length; i++)
+        //{
+            //TarotPrefab tarotPrefab = allTarotPrefabs[selectedTarotIndex[i]]; //0表示愚者
+            //selectedTarotPrefabs[i] = tarotPrefab;
+        //}
     }
 
     private void Start()
@@ -41,4 +52,6 @@ public class GameManager : SingletonBehaviour<GameManager>
         }       
         StartCoroutine(TarotManager.Instance.AllFill());
     }
+
+
 }
